@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 const registerSchema = Yup.object().shape({
   nome: Yup.string().required('Nome é obrigatório'),
   email: Yup.string().email('Email inválido').required('Email é obrigatório'),
-  senha: Yup.string().min(6, 'Mínimo de 6 caracteres').required('Senha é obrigatória'),
+  senha: Yup.string()
+    .min(6, 'Mínimo de 6 caracteres')
+    .required('Senha é obrigatória'),
 });
 
 function RegisterPage() {
@@ -53,7 +55,11 @@ function RegisterPage() {
               <ErrorMessage name="senha" component="div" />
             </div>
 
-            <button type="submit" disabled={isSubmitting} style={{ marginTop: '1rem' }}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={{ marginTop: '1rem' }}
+            >
               Registrar
             </button>
           </Form>

@@ -35,7 +35,9 @@ function HomePage() {
   };
 
   const handleDeleteLista = (listaId) => {
-    setListas((prevListas) => prevListas.filter((lista) => lista._id !== listaId));
+    setListas((prevListas) =>
+      prevListas.filter((lista) => lista._id !== listaId)
+    );
   };
 
   const handleNovaLista = () => {
@@ -55,27 +57,39 @@ function HomePage() {
       {usuario ? (
         <>
           <h2>Bem-vindo, {usuario.usuario.nome}!</h2>
-          <button onClick={handleLogout} style={{ marginBottom: '1rem', marginRight: '1rem' }}>
+          <button
+            onClick={handleLogout}
+            style={{ marginBottom: '1rem', marginRight: '1rem' }}
+          >
             Sair
           </button>
-          <button onClick={handleNovaLista} style={{ marginBottom: '1rem', marginRight: '1rem' }}>
+          <button
+            onClick={handleNovaLista}
+            style={{ marginBottom: '1rem', marginRight: '1rem' }}
+          >
             Nova Lista
           </button>
-          <button onClick={handleIrParaPesquisa} style={{ marginBottom: '1rem' }}>
+          <button
+            onClick={handleIrParaPesquisa}
+            style={{ marginBottom: '1rem' }}
+          >
             Pesquisar Itens
           </button>
 
           <h3>Minhas listas:</h3>
-          <ListaContainer 
-            listas={listas} 
-            onDelete={handleDeleteLista} 
+          <ListaContainer
+            listas={listas}
+            onDelete={handleDeleteLista}
             onEdit={handleEditLista}
           />
         </>
       ) : (
         <>
           <p>Você não está logado.</p>
-          <button onClick={() => navigate('/login')} style={{ marginRight: '1rem' }}>
+          <button
+            onClick={() => navigate('/login')}
+            style={{ marginRight: '1rem' }}
+          >
             Fazer login
           </button>
           <button onClick={() => navigate('/register')}>Registrar</button>
