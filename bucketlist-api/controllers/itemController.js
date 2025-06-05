@@ -1,9 +1,8 @@
-const Item = require('../models/Item');
+const { Item, Lista } = require('../models');
 
 exports.criarItem = async (req, res) => {
     try {
-        const item = new Item(req.body);
-        await item.save();
+        const item = await Item.create(req.body);
         res.status(201).json(item);
     } catch (error) {
         res.status(400).json({ message: 'Erro ao criar item', error });
@@ -13,11 +12,11 @@ exports.criarItem = async (req, res) => {
 exports.obterItens = async (req, res) => {
     try {
         const { listaId } = req.query;
-
-       
-        const filtro = listaId ? { listaId } : {};
-
-        const itens = await Item.find(filtro).populate('listaId', 'nome descricao');
+        const filtro = listaId ? { where: { listaId } } : {};
+        const itens = await Item.findAll({
+            ...filtro,
+            include: { model: Lista, attributes: ['nome', 'descricao'] }
+        });
         res.status(200).json(itens);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar itens', error });
@@ -27,8 +26,10 @@ exports.obterItens = async (req, res) => {
 exports.atualizarItem = async (req, res) => {
     try {
         const { id } = req.params;
-        const atualizado = await Item.findByIdAndUpdate(id, req.body, { new: true });
-        if (!atualizado) return res.status(404).json({ message: 'Item não encontrado' });
+        const [atualizados] = await Item.update(req.body, { where: { id } });
+        if (!atualizados) return res.status(404).json({ message: 'Item não encontrado' });
+
+        const atualizado = await Item.findByPk(id);
         res.status(200).json(atualizado);
     } catch (error) {
         res.status(400).json({ message: 'Erro ao atualizar item', error });
@@ -38,8 +39,8 @@ exports.atualizarItem = async (req, res) => {
 exports.deletarItem = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletado = await Item.findByIdAndDelete(id);
-        if (!deletado) return res.status(404).json({ message: 'Item não encontrado' });
+        const deletados = await Item.destroy({ where: { id } });
+        if (!deletados) return res.status(404).json({ message: 'Item não encontrado' });
         res.status(200).json({ message: 'Item deletado com sucesso' });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar item', error });

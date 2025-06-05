@@ -1,12 +1,32 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Lista = require('./Lista');
 
-const itemSchema = new mongoose.Schema({
-    titulo: { type: String, required: true, trim: true },
-    categoria: { type: String, enum: ["Jogo", "Livro", "Filme", "Viagem", "Esporte", "Outro"], default: "Outro" },
-    prioridade: { type: String, enum: ["Baixa", "Média", "Alta"], default: "Média" },
-    status: { type: String, enum: ["Pendente", "Concluído"], default: "Pendente" },
-    prazo: { type: Date },
-    listaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Lista', required: true }
-}, { timestamps: true });
+const Item = sequelize.define('Item', {
+  titulo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  categoria: {
+    type: DataTypes.ENUM('Jogo', 'Livro', 'Filme', 'Viagem', 'Esporte', 'Outro'),
+    defaultValue: 'Outro',
+  },
+  prioridade: {
+    type: DataTypes.ENUM('Baixa', 'Média', 'Alta'),
+    defaultValue: 'Média',
+  },
+  status: {
+    type: DataTypes.ENUM('Pendente', 'Concluído'),
+    defaultValue: 'Pendente',
+  },
+  prazo: {
+    type: DataTypes.DATE,
+  },
+}, {
+  timestamps: true,
+});
 
-module.exports = mongoose.model('Item', itemSchema);
+Item.belongsTo(Lista, { foreignKey: 'listaId', onDelete: 'CASCADE' });
+Lista.hasMany(Item, { foreignKey: 'listaId' });
+
+module.exports = Item;

@@ -1,9 +1,20 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Usuario = require('./Usuario');
 
-const listaSchema = new mongoose.Schema({
-    nome: { type: String, required: true, trim: true },
-    descricao: { type: String, trim: true },
-    usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true }
-}, { timestamps: true });
+const Lista = sequelize.define('Lista', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  descricao: {
+    type: DataTypes.STRING,
+  },
+}, {
+  timestamps: true,
+});
 
-module.exports = mongoose.model('Lista', listaSchema);
+Lista.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
+Usuario.hasMany(Lista, { foreignKey: 'usuarioId' });
+
+module.exports = Lista;
