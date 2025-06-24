@@ -3,7 +3,7 @@ import api from '../services/api';
 
 function PesquisaItens() {
   const [filtros, setFiltros] = useState({
-    titulo: '',
+     titulo: '',
     categoria: '',
     status: '',
     prioridade: '',
