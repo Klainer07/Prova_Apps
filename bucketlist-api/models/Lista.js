@@ -1,20 +1,52 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const Usuario = require('./Usuario');
+'use strict';
+const { Model } = require('sequelize');
 
-const Lista = sequelize.define('Lista', {
-  nome: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  descricao: {
-    type: DataTypes.STRING,
-  },
-}, {
-  timestamps: true,
-});
+module.exports = (sequelize, DataTypes) => {
+  class Lista extends Model {
+    static associate(models) {
+      // Uma lista pertence a um usuário
+      Lista.belongsTo(models.Usuario, {
+        foreignKey: 'usuarioId',
+        as: 'usuario',
+        onDelete: 'CASCADE',
+      });
 
-Lista.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
-Usuario.hasMany(Lista, { foreignKey: 'usuarioId' });
+      // Uma lista tem muitos itens
+      Lista.hasMany(models.Item, {
+        foreignKey: 'listaId',
+        as: 'itens',
+        onDelete: 'CASCADE',
+      });
+    }
+  }
 
-module.exports = Lista;
+  Lista.init(
+    {
+      nome: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        // trim não existe no Sequelize, trate no controller ou hook se precisar
+      },
+      descricao: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      usuarioId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'usuarios',
+          key: 'id',
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Lista',
+      tableName: 'listas',
+      timestamps: true,
+    }
+  );
+
+  return Lista;
+};

@@ -5,7 +5,6 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const listaRoutes = require('./routes/listaRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 
-
 const app = express();
 
 app.use(cors());

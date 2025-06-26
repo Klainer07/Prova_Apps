@@ -1,25 +1,45 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+'use strict';
+const { Model } = require('sequelize');
 
-const Usuario = sequelize.define('Usuario', {
-  nome: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
+module.exports = (sequelize, DataTypes) => {
+  class Usuario extends Model {
+    static associate(models) {
+      Usuario.hasMany(models.Lista, {
+        foreignKey: 'usuarioId',
+        as: 'listas',
+        onDelete: 'CASCADE',
+      });
+    }
+  }
+
+  Usuario.init(
+    {
+      nome: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
+      senha: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-  },
-  senha: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: true,
-});
+    {
+      sequelize,
+      modelName: 'Usuario',
+      tableName: 'usuarios',
+      timestamps: true,
+      underscored: false,
+    }
+  );
 
-module.exports = Usuario;
+  return Usuario;
+};

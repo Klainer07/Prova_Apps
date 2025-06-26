@@ -1,32 +1,56 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const Lista = require('./Lista');
+'use strict';
+const { Model } = require('sequelize');
 
-const Item = sequelize.define('Item', {
-  titulo: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  categoria: {
-    type: DataTypes.ENUM('Jogo', 'Livro', 'Filme', 'Viagem', 'Esporte', 'Outro'),
-    defaultValue: 'Outro',
-  },
-  prioridade: {
-    type: DataTypes.ENUM('Baixa', 'Média', 'Alta'),
-    defaultValue: 'Média',
-  },
-  status: {
-    type: DataTypes.ENUM('Pendente', 'Concluído'),
-    defaultValue: 'Pendente',
-  },
-  prazo: {
-    type: DataTypes.DATE,
-  },
-}, {
-  timestamps: true,
-});
+module.exports = (sequelize, DataTypes) => {
+  class Item extends Model {
+    static associate(models) {
+      // Cada item pertence a uma lista
+      Item.belongsTo(models.Lista, {
+        foreignKey: 'listaId',
+        as: 'lista',
+        onDelete: 'CASCADE',
+      });
+    }
+  }
 
-Item.belongsTo(Lista, { foreignKey: 'listaId', onDelete: 'CASCADE' });
-Lista.hasMany(Item, { foreignKey: 'listaId' });
+  Item.init(
+    {
+      titulo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      categoria: {
+        type: DataTypes.ENUM('Jogo', 'Livro', 'Filme', 'Viagem', 'Esporte', 'Outro'),
+        defaultValue: 'Outro',
+      },
+      prioridade: {
+        type: DataTypes.ENUM('Baixa', 'Média', 'Alta'),
+        defaultValue: 'Média',
+      },
+      status: {
+        type: DataTypes.ENUM('Pendente', 'Concluído'),
+        defaultValue: 'Pendente',
+      },
+      prazo: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      listaId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'listas',
+          key: 'id',
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Item',
+      tableName: 'itens',
+      timestamps: true,
+    }
+  );
 
-module.exports = Item;
+  return Item;
+};
