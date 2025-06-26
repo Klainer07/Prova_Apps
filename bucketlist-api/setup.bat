@@ -20,7 +20,7 @@ IF %ERRORLEVEL% NEQ 0 (
 echo Banco de dados %DB_NAME% criado com sucesso.
 
 echo Rodando migrations...
-:: Usar CALL para garantir que o script de lote aguarde a conclusão do npx sequelize-cli db:migrate
+
 CALL npx sequelize-cli db:migrate
 
 IF %ERRORLEVEL% NEQ 0 (
@@ -32,7 +32,7 @@ IF %ERRORLEVEL% NEQ 0 (
 echo Migrations rodadas com sucesso.
 
 echo Rodando seeders...
-:: Usar CALL para garantir que o script de lote aguarde a conclusão do npx sequelize-cli db:seed:all
+
 CALL npx sequelize-cli db:seed:all
 
 IF %ERRORLEVEL% NEQ 0 (
@@ -46,7 +46,3 @@ echo Seeders rodados com sucesso.
 echo Iniciando a aplicação...
 npm start
 
-:: Se npm start iniciar um servidor que não retorna o controle,
-:: o script irá pausar após a aplicação ser iniciada e não terminar.
-:: Você pode remover 'pause' se quiser que o script termine quando 'npm start' for fechado.
-pause
