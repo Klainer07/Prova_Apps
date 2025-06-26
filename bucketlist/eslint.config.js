@@ -1,27 +1,33 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import prettierPlugin from 'eslint-plugin-prettier';
-import { defineConfig } from 'eslint/config';
-export default defineConfig([
-  js.configs.recommended,
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+
+export default [
+  { ignores: ['dist'] },
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ['**/*.{js,jsx}'],
     languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-      globals: globals.node,
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
     },
     plugins: {
-      prettier: prettierPlugin,
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
     },
     rules: {
-      // Suas regras personalizadas
-      'prefer-const': 'error',
-      'no-console': 'warn',
-      'consistent-return': 'warn',
-      'prefer-template': 'warn',
-      // Regras do Prettier via ESLint
-      'prettier/prettier': 'error',
+      ...js.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
-]);
+]

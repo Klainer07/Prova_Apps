@@ -6,7 +6,7 @@ function ListaContainer({ listas, onDelete, onEdit }) {
     <div>
       {listas.map((lista) => (
         <ListaItem
-          key={lista._id}
+          key={lista.id}
           lista={lista}
           onDelete={onDelete}
           onEdit={onEdit}

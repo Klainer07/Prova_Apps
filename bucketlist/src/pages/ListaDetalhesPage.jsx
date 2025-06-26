@@ -10,7 +10,7 @@ function ListaDetalhesPage() {
     categoria: 'Outro',
     prioridade: 'Média',
     status: 'Pendente',
-    prazo: '',
+    prazo: ''
   });
   const [editandoId, setEditandoId] = useState(null);
   const [itemEditado, setItemEditado] = useState({});
@@ -46,29 +46,15 @@ function ListaDetalhesPage() {
       const itemParaEnviar = {
         ...novoItem,
         listaId,
-        prazo: novoItem.prazo
-          ? new Date(novoItem.prazo).toISOString()
-          : undefined,
+        prazo: novoItem.prazo ? new Date(novoItem.prazo).toISOString() : undefined,
       };
 
       await api.post('/itens', itemParaEnviar);
-      setNovoItem({
-        titulo: '',
-        categoria: 'Outro',
-        prioridade: 'Média',
-        status: 'Pendente',
-        prazo: '',
-      });
+      setNovoItem({ titulo: '', categoria: 'Outro', prioridade: 'Média', status: 'Pendente', prazo: '' });
       carregarItens();
     } catch (error) {
-      console.error(
-        'Erro ao adicionar item:',
-        error.response?.data || error.message
-      );
-      alert(
-        'Erro ao adicionar item: ' +
-          (error.response?.data?.message || error.message)
-      );
+      console.error('Erro ao adicionar item:', error.response?.data || error.message);
+      alert('Erro ao adicionar item: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -79,28 +65,20 @@ function ListaDetalhesPage() {
       carregarItens();
     } catch (error) {
       console.error('Erro ao deletar item:', error);
-      alert(
-        'Erro ao deletar item: ' +
-          (error.response?.data?.message || error.message)
-      );
+      alert('Erro ao deletar item: ' + (error.response?.data?.message || error.message));
     }
   };
 
   const handleEdit = (item) => {
-    setEditandoId(item._id);
-    setItemEditado({
-      ...item,
-      prazo: item.prazo ? item.prazo.substring(0, 10) : '',
-    });
+    setEditandoId(item.id);
+    setItemEditado({ ...item, prazo: item.prazo ? item.prazo.substring(0, 10) : '' });
   };
 
   const handleSave = async () => {
     try {
       await api.put(`/itens/${editandoId}`, {
         ...itemEditado,
-        prazo: itemEditado.prazo
-          ? new Date(itemEditado.prazo).toISOString()
-          : undefined,
+        prazo: itemEditado.prazo ? new Date(itemEditado.prazo).toISOString() : undefined,
       });
       setEditandoId(null);
       setItemEditado({});
@@ -127,8 +105,8 @@ function ListaDetalhesPage() {
       {itens.length > 0 ? (
         <ul>
           {itens.map((item) => (
-            <li key={item._id}>
-              {editandoId === item._id ? (
+            <li key={item.id}>
+              {editandoId === item.id ? (
                 <>
                   <input
                     type="text"
@@ -137,11 +115,7 @@ function ListaDetalhesPage() {
                     onChange={handleEditChange}
                     required
                   />
-                  <select
-                    name="categoria"
-                    value={itemEditado.categoria}
-                    onChange={handleEditChange}
-                  >
+                  <select name="categoria" value={itemEditado.categoria} onChange={handleEditChange}>
                     <option value="Livro">Livro</option>
                     <option value="Jogo">Jogo</option>
                     <option value="Filme">Filme</option>
@@ -149,20 +123,12 @@ function ListaDetalhesPage() {
                     <option value="Esporte">Esporte</option>
                     <option value="Outro">Outro</option>
                   </select>
-                  <select
-                    name="prioridade"
-                    value={itemEditado.prioridade}
-                    onChange={handleEditChange}
-                  >
+                  <select name="prioridade" value={itemEditado.prioridade} onChange={handleEditChange}>
                     <option value="Alta">Alta</option>
                     <option value="Média">Média</option>
                     <option value="Baixa">Baixa</option>
                   </select>
-                  <select
-                    name="status"
-                    value={itemEditado.status}
-                    onChange={handleEditChange}
-                  >
+                  <select name="status" value={itemEditado.status} onChange={handleEditChange}>
                     <option value="Pendente">Pendente</option>
                     <option value="Concluído">Concluído</option>
                   </select>
@@ -177,19 +143,12 @@ function ListaDetalhesPage() {
                 </>
               ) : (
                 <>
-                  <strong>{item.titulo}</strong> -- {item.status} -- Prioridade:{' '}
-                  {item.prioridade} -- Categoria: {item.categoria} -- Prazo:{' '}
-                  {item.prazo
-                    ? new Date(item.prazo).toLocaleDateString()
-                    : 'Sem prazo'}
-                  <button
-                    onClick={() => handleEdit(item)}
-                    style={{ marginLeft: '1rem' }}
-                  >
+                  <strong>{item.titulo}</strong> -- {item.status} -- Prioridade: {item.prioridade} -- Categoria: {item.categoria} -- Prazo: {item.prazo ? new Date(item.prazo).toLocaleDateString() : 'Sem prazo'}
+                  <button onClick={() => handleEdit(item)} style={{ marginLeft: '1rem' }}>
                     Editar
                   </button>
                   <button
-                    onClick={() => handleDelete(item._id)}
+                    onClick={() => handleDelete(item.id)}
                     style={{ marginLeft: '0.5rem' }}
                   >
                     Deletar
@@ -213,11 +172,7 @@ function ListaDetalhesPage() {
           onChange={handleChange}
           required
         />
-        <select
-          name="categoria"
-          value={novoItem.categoria}
-          onChange={handleChange}
-        >
+        <select name="categoria" value={novoItem.categoria} onChange={handleChange}>
           <option value="Livro">Livro</option>
           <option value="Jogo">Jogo</option>
           <option value="Filme">Filme</option>
@@ -225,11 +180,7 @@ function ListaDetalhesPage() {
           <option value="Esporte">Esporte</option>
           <option value="Outro">Outro</option>
         </select>
-        <select
-          name="prioridade"
-          value={novoItem.prioridade}
-          onChange={handleChange}
-        >
+        <select name="prioridade" value={novoItem.prioridade} onChange={handleChange}>
           <option value="Alta">Alta</option>
           <option value="Média">Média</option>
           <option value="Baixa">Baixa</option>

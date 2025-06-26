@@ -7,9 +7,7 @@ function PesquisarItensPage() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <button onClick={() => navigate('/')} style={{ marginBottom: '1rem' }}>
-        Voltar
-      </button>
+      <button onClick={() => navigate('/')} style={{ marginBottom: '1rem' }}>Voltar</button>
       <h2>Pesquisar Itens</h2>
       <PesquisaItens />
     </div>

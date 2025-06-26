@@ -3,7 +3,7 @@ import api from '../services/api';
 
 function PesquisaItens() {
   const [filtros, setFiltros] = useState({
-     titulo: '',
+    titulo: '',
     categoria: '',
     status: '',
     prioridade: '',
@@ -15,8 +15,7 @@ function PesquisaItens() {
       const res = await api.get('/itens');
       const itensFiltrados = res.data.filter((item) => {
         return (
-          (!filtros.titulo ||
-            item.titulo.toLowerCase().includes(filtros.titulo.toLowerCase())) &&
+          (!filtros.titulo || item.titulo.toLowerCase().includes(filtros.titulo.toLowerCase())) &&
           (!filtros.categoria || item.categoria === filtros.categoria) &&
           (!filtros.status || item.status === filtros.status) &&
           (!filtros.prioridade || item.prioridade === filtros.prioridade)
@@ -49,12 +48,7 @@ function PesquisaItens() {
           onChange={handleChange}
           style={{ marginRight: '1rem' }}
         />
-        <select
-          name="categoria"
-          value={filtros.categoria}
-          onChange={handleChange}
-          style={{ marginRight: '1rem' }}
-        >
+        <select name="categoria" value={filtros.categoria} onChange={handleChange} style={{ marginRight: '1rem' }}>
           <option value="">Todas as categorias</option>
           <option value="Livro">Livro</option>
           <option value="Jogo">Jogo</option>
@@ -63,12 +57,7 @@ function PesquisaItens() {
           <option value="Esporte">Esporte</option>
           <option value="Outro">Outro</option>
         </select>
-        <select
-          name="prioridade"
-          value={filtros.prioridade}
-          onChange={handleChange}
-          style={{ marginRight: '1rem' }}
-        >
+        <select name="prioridade" value={filtros.prioridade} onChange={handleChange} style={{ marginRight: '1rem' }}>
           <option value="">Todas as prioridades</option>
           <option value="Alta">Alta</option>
           <option value="Média">Média</option>
@@ -86,8 +75,7 @@ function PesquisaItens() {
         <ul>
           {resultados.map((item) => (
             <li key={item._id}>
-              <strong>{item.titulo}</strong> - {item.categoria},{' '}
-              {item.prioridade}, {item.status}
+              <strong>{item.titulo}</strong> - {item.categoria}, {item.prioridade}, {item.status}
               <br />
               <small>Lista: {item.listaId?.nome}</small>
             </li>

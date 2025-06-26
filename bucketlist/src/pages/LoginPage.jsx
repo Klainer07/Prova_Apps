@@ -51,10 +51,13 @@ function LoginPage() {
       </Formik>
       <div style={{ marginTop: '1rem' }}>
         <p>Não tem uma conta?</p>
-        <button onClick={() => navigate('/register')}>Registre-se</button>
+        <button onClick={() => navigate('/register')}>
+          Registre-se
+        </button>
       </div>
     </div>
   );
 }
 
 export default LoginPage;
+
