@@ -14,13 +14,11 @@ export default defineConfig([
     plugins: {
       prettier: prettierPlugin,
     },
-    rules: {
-      // Suas regras personalizadas
+    rules: {     
       'prefer-const': 'error',
       'no-console': 'warn',
       'consistent-return': 'warn',
       'prefer-template': 'warn',
-      // Regras do Prettier via ESLint
       'prettier/prettier': 'error',
     },
   },

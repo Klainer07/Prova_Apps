@@ -1,7 +1,19 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: Configurações do banco de dados
+echo Instalando dependências do Node.js...
+
+CALL npm install
+
+IF %ERRORLEVEL% NEQ 0 (
+    echo Erro ao instalar as dependências. Verifique sua conexão ou o package.json.
+    pause
+    exit /b
+)
+
+echo Dependências instaladas com sucesso.
+
+
 set DB_NAME=bucket
 set DB_USER=root
 set DB_PASS=123456
@@ -46,3 +58,5 @@ echo Seeders rodados com sucesso.
 echo Iniciando a aplicação...
 npm start
 
+
+pause

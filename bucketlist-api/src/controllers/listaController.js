@@ -2,17 +2,8 @@ const { Lista, Usuario } = require('../models');
 
 exports.criarLista = async (req, res) => {
   try {
-    const { nome, descricao, usuarioId } = req.body;
-
-    if (!usuarioId) {
-      return res.status(400).json({ message: 'usuarioId é obrigatório' });
-    }
-
-    // Opcional: Verificar se o usuário existe
-    const usuarioExiste = await Usuario.findByPk(usuarioId);
-    if (!usuarioExiste) {
-      return res.status(400).json({ message: 'Usuário não encontrado' });
-    }
+    const usuarioId = req.usuario.id; // VEM DO TOKEN
+    const { nome, descricao } = req.body;
 
     const lista = await Lista.create({ nome, descricao, usuarioId });
 
@@ -24,13 +15,10 @@ exports.criarLista = async (req, res) => {
 
 exports.obterListas = async (req, res) => {
   try {
-    const { usuarioId } = req.query;
+    const usuarioId = req.usuario.id;
 
-    const where = usuarioId ? { usuarioId } : {};
-
-    // Inclui dados do usuário associado (nome, email)
     const listas = await Lista.findAll({
-      where,
+      where: { usuarioId },
       include: [{
         model: Usuario,
         as: 'usuario',
@@ -47,17 +35,15 @@ exports.obterListas = async (req, res) => {
 exports.atualizarLista = async (req, res) => {
   try {
     const { id } = req.params;
+    const usuarioId = req.usuario.id;
 
-    const [updated] = await Lista.update(req.body, {
-      where: { id },
-    });
+    const lista = await Lista.findByPk(id);
 
-    if (!updated) {
-      return res.status(404).json({ message: 'Lista não encontrada' });
-    }
+    if (!lista) return res.status(404).json({ message: 'Lista não encontrada' });
+    if (lista.usuarioId !== usuarioId) return res.status(403).json({ message: 'Acesso negado' });
 
-    const listaAtualizada = await Lista.findByPk(id);
-    res.status(200).json(listaAtualizada);
+    await lista.update(req.body);
+    res.status(200).json(lista);
   } catch (error) {
     res.status(400).json({ message: 'Erro ao atualizar lista', error: error.message });
   }
@@ -66,15 +52,14 @@ exports.atualizarLista = async (req, res) => {
 exports.deletarLista = async (req, res) => {
   try {
     const { id } = req.params;
+    const usuarioId = req.usuario.id;
 
-    const deleted = await Lista.destroy({
-      where: { id },
-    });
+    const lista = await Lista.findByPk(id);
 
-    if (!deleted) {
-      return res.status(404).json({ message: 'Lista não encontrada' });
-    }
+    if (!lista) return res.status(404).json({ message: 'Lista não encontrada' });
+    if (lista.usuarioId !== usuarioId) return res.status(403).json({ message: 'Acesso negado' });
 
+    await lista.destroy();
     res.status(200).json({ message: 'Lista deletada com sucesso' });
   } catch (error) {
     res.status(500).json({ message: 'Erro ao deletar lista', error: error.message });

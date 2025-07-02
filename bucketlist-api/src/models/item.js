@@ -4,7 +4,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     static associate(models) {
-      // Cada item pertence a uma lista
       Item.belongsTo(models.Lista, {
         foreignKey: 'listaId',
         as: 'lista',

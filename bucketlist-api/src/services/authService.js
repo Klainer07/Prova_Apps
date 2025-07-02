@@ -12,7 +12,7 @@ async function registrarUsuario({ nome, email, senha }) {
     nome,
     email,
     senha: senhaCriptografada,
-    role: 'usuario', // padrão, pode alterar se quiser
+    role: 'usuario', 
   });
 
   return {
