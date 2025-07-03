@@ -139,14 +139,7 @@ npm run dev
 
 > As portas podem variar conforme o conteúdo do `.env` ou configuração do seu sistema
 
----
 
-## 🧪 Testes
-
-- Utilize o **Postman** ou o **REST Client (VS Code)** para testar os endpoints da API
-- Exemplo de requisições estão disponíveis na pasta `/docs` (se aplicável)
-
----
 
 ## ✅ Conclusão
 
@@ -205,7 +198,7 @@ npm start
 ---
 ### 🌐 Inicie o Frontend
 
-Abra outro terminal, acesse a pasta do frontend e execute:
+Abra outro terminal e execute:
 
 ```bash
 cd ../bucketlist
