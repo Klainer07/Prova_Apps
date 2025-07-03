@@ -115,7 +115,7 @@ npm start
 1. Acesse a pasta `bucketlist`
 2. Execute o script:
 ```bash
-.ucketlist.bat
+.\bucketlist.bat
 ```
 
 Esse script irá:
