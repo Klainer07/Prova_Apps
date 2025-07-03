@@ -7,7 +7,7 @@ Estrutura do Projeto
 
   └── setup.bat
 
-/bucket
+/bucketlist
 
   └── bucketlist.bat
   
