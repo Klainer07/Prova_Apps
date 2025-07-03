@@ -1,103 +1,148 @@
-# Prova02
-Frontend e Backend do projeto da prova 2 de aplicativos corporativos
 
-Estrutura do Projeto
+# 📦 BucketList App – Prova 02
+Frontend e Backend do projeto da prova 2 de Aplicativos Corporativos  
+**Autor:** Natã da Cruz Klein
 
+---
+
+## 📝 Descrição do Projeto
+
+Este aplicativo permite que os usuários criem e gerenciem uma **bucket list** – uma lista de metas, sonhos e atividades que desejam realizar ao longo da vida. A aplicação é dividida entre:
+
+- **Backend:** API REST com Node.js, Express e MySQL
+- **Frontend:** Aplicação React com Vite
+
+---
+
+## 🚀 Funcionalidades
+
+### ✅ Backend (API)
+- Criar, listar, editar e remover itens da bucket list
+- Categorizar itens (ex: viagens, livros, filmes, jogos, experiências)
+- Marcar itens como **pendente** ou **concluído**
+- Usar prioridades e prazos
+- Autenticação com JWT
+
+### 🌐 Endpoints principais
+| Método | Rota                   | Descrição                      |
+|--------|------------------------|-------------------------------|
+| GET    | `/items`              | Lista todos os itens          |
+| POST   | `/items`              | Cria um novo item             |
+| PUT    | `/items/:id`          | Edita um item                 |
+| DELETE | `/items/:id`          | Remove um item                |
+| POST   | `/auth/login`         | Login do usuário              |
+| POST   | `/auth/register`      | Registro de novo usuário      |
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
 /bucketlist-api
-
-  └── setup.bat
+  ├── setup.bat
+  ├── .env
+  └── src/...
 
 /bucketlist
-
   └── bucketlist.bat
-  
+```
 
-Para a instalação do App 
+---
 
+## 🧰 Tecnologias Utilizadas
 
-Backend
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MySQL](https://www.mysql.com/)
+- [Dotenv](https://github.com/motdotla/dotenv)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
 
+---
 
+## ⚙️ Requisitos
 
+- [Node.js](https://nodejs.org)
+- MySQL instalado e em execução localmente
 
-Pré-requisitos
-Node.js instalado – https://nodejs.org
+---
 
-MySQL instalado e funcionando localmente
+## 📦 Instalação e Execução
 
-Editar o arquivo setup.bat e .env
+### 🔧 Backend
 
-Abra o arquivo setup.bat que está dentro da pasta bucketlist-api e verifique as seguintes variáveis de conexão com o banco de dados:
-
+1. Acesse a pasta `bucketlist-api`
+2. **Edite o arquivo `setup.bat`**, ajustando as variáveis do banco:
+```bat
 set DB_NAME=bucket
 set DB_USER=root
 set DB_PASS=1234
 set DB_HOST=localhost
+```
 
-Abra o arquivo .env que está dentro da pasta bucketlist-api e verifique as seguintes variáveis de conexão com o banco de dados:
-
+3. **Edite também o arquivo `.env`**:
+```
 PORT=3000
 DB_NAME=bucket
 DB_USER=root
 DB_PASS=1234
 DB_HOST=localhost
 JWT_SECRET=supersecreto
+```
 
-substituia para o valore do seu computador
+> Substitua os valores acima conforme sua configuração local.
 
-Dê duplo clique no arquivo setup.bat ou execute no terminal:
-
-
+4. Execute o script:
+```bash
 .\setup.bat
-
+```
 
 Esse script irá:
+- Instalar dependências (`npm install`)
+- Criar o banco de dados automaticamente
+- Rodar migrations e seeders (`npx sequelize-cli`)
+- Iniciar o servidor (`npm start`)
 
-Instalar as dependências do Node.js (npm install)
-
-Criar o banco de dados no MySQL
-
-Rodar as migrations e seeders com Sequelize
-
-Iniciar o servidor backend (npm start)
-
-Nas proximas inicializações somente o comando abaixo precisa ser executado
-
-
+➡️ **Nas próximas execuções, use apenas:**
+```bash
 npm start
+```
 
+---
 
-Frontend
+### 🖥️ Frontend
 
-Acesse a pasta bucketlist 
-
-Execute o arquivo bucketlist.bat com um duplo clique ou via terminal:
-
-
+1. Acesse a pasta `bucketlist`
+2. Execute o script:
+```bash
 .\bucketlist.bat
-
+```
 
 Esse script irá:
-
-Instalar as dependências do frontend
-
-Iniciar o servidor frontend com npm run dev
-
-Nas proximas inicializações somente o comando abaixo precisa ser executado
-
+- Instalar as dependências (`npm install`)
+- Iniciar o frontend com:
+```bash
 npm run dev
+```
 
+➡️ **Nas próximas execuções, use apenas:**
+```bash
+npm run dev
+```
 
-Acessando o projeto
-Frontend: http://localhost:5173
+---
 
-Backend (API): http://localhost:3000
+## 🔗 Acessando o Projeto
 
+- **Frontend:** http://localhost:5173  
+- **Backend (API):** http://localhost:3000  
 
-(as portas podem variar se você alterá-las)
+> As portas podem variar conforme o conteúdo do `.env` ou configuração do seu sistema
 
+---
 
+## ✅ Conclusão
 
+Este projeto foi desenvolvido como parte da avaliação da disciplina **Aplicativos Corporativos**, com foco na construção de uma aplicação full-stack com integração entre frontend e backend.
 
-
-De Natã da Cruz Klein
+---
