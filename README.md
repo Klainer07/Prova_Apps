@@ -4,9 +4,13 @@ Frontend e Backend do projeto da prova 2 de aplicativos corporativos
 Estrutura do Projeto
 
 /bucketlist-api
+
   └── setup.bat
+
 /bucket
+
   └── bucketlist.bat
+  
 
 Para a instalação do App 
 
