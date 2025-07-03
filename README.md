@@ -115,7 +115,7 @@ npm start
 1. Acesse a pasta `bucketlist`
 2. Execute o script:
 ```bash
-.\bucketlist.bat
+.ucketlist.bat
 ```
 
 Esse script irá:
@@ -141,8 +141,73 @@ npm run dev
 
 ---
 
+## 🧪 Testes
+
+- Utilize o **Postman** ou o **REST Client (VS Code)** para testar os endpoints da API
+- Exemplo de requisições estão disponíveis na pasta `/docs` (se aplicável)
+
+---
+
 ## ✅ Conclusão
 
 Este projeto foi desenvolvido como parte da avaliação da disciplina **Aplicativos Corporativos**, com foco na construção de uma aplicação full-stack com integração entre frontend e backend.
 
 ---
+
+---
+
+## 📥 Alternativa: Instalação Manual via Terminal
+
+Caso não deseje usar os arquivos `.bat`, siga os passos abaixo:
+
+### 🔁 Clone o repositório
+
+```bash
+git clone https://github.com/Klainer07/Prova_Apps.git
+cd Prova_Apps/bucketlist-api
+```
+
+### 📦 Instale as dependências
+
+```bash
+npm install
+```
+
+### ⚙️ Configure o ambiente
+
+Crie o arquivo `.env` com base nas configurações abaixo:
+
+```
+PORT=3000
+DB_NAME=bucket
+DB_USER=root
+DB_PASS=1234
+DB_HOST=localhost
+JWT_SECRET=supersecreto
+```
+
+### 🗃️ Configure o banco de dados
+
+Certifique-se de que o MySQL está rodando e execute os seguintes comandos para criar o banco de dados:
+
+```bash
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS bucket CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
+
+### 🚀 Inicie a aplicação
+
+```bash
+npm start
+```
+
+---
+### 🌐 Inicie o Frontend
+
+Abra outro terminal, acesse a pasta do frontend e execute:
+
+```bash
+cd ../bucketlist
+npm install
+npm run dev
