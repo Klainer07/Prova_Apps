@@ -14,7 +14,14 @@ module.exports = {
         allowNull: false,
       },
       categoria: {
-        type: Sequelize.ENUM('Jogo', 'Livro', 'Filme', 'Viagem', 'Esporte', 'Outro'),
+        type: Sequelize.ENUM(
+          'Jogo',
+          'Livro',
+          'Filme',
+          'Viagem',
+          'Esporte',
+          'Outro'
+        ),
         defaultValue: 'Outro',
       },
       prioridade: {

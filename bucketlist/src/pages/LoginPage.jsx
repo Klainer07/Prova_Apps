@@ -19,7 +19,12 @@ function LoginPage() {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
 
-      navigate('/');
+      // Redireciona conforme o role do usuário
+      if (response.data.usuario.role === 'admin') {
+        navigate('/admin'); // rota da home do admin
+      } else {
+        navigate('/'); // rota da home normal
+      }
     } catch (error) {
       setErrors({ senha: 'Login inválido' });
     } finally {
@@ -40,12 +45,12 @@ function LoginPage() {
             <div>
               <label>Email:</label>
               <Field type="email" name="email" />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
             </div>
             <div>
               <label>Senha:</label>
               <Field type="password" name="senha" />
-              <ErrorMessage name="senha" component="div" />
+              <ErrorMessage name="senha" component="div" style={{ color: 'red' }} />
             </div>
             <button type="submit" disabled={isSubmitting}>
               Entrar

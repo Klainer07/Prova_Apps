@@ -23,7 +23,8 @@ exports.atualizarUsuario = async (req, res) => {
       where: { id },
     });
 
-    if (!updated) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!updated)
+      return res.status(404).json({ message: 'Usuário não encontrado' });
 
     const usuarioAtualizado = await Usuario.findByPk(id);
     res.status(200).json(usuarioAtualizado);
@@ -37,7 +38,8 @@ exports.deletarUsuario = async (req, res) => {
     const { id } = req.params;
     const deletado = await Usuario.destroy({ where: { id } });
 
-    if (!deletado) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!deletado)
+      return res.status(404).json({ message: 'Usuário não encontrado' });
 
     res.status(200).json({ message: 'Usuário deletado com sucesso' });
   } catch (error) {

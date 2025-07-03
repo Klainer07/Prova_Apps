@@ -6,6 +6,8 @@ import NovaListaPage from './pages/NovaListaPage';
 import EditarListaPage from './pages/EditarListaPage';
 import ListaDetalhesPage from './pages/ListaDetalhesPage'; 
 import PesquisarItensPage from './pages/PesquisarItensPage';
+import AdminHomePage from './pages/AdminHomePage';
+import EditarUsuarioPage from './pages/EditarUsuarioPage';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path="/listas/editar/:listaId" element={<EditarListaPage />} />
       <Route path="/listas/:listaId" element={<ListaDetalhesPage />} /> 
       <Route path="/pesquisar" element={<PesquisarItensPage />} />
+      <Route path="/admin" element={<AdminHomePage />} />
+      <Route path="/admin/usuarios/editar/:id" element={<EditarUsuarioPage />} />
     </Routes>
   );
 }

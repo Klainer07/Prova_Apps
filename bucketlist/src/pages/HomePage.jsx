@@ -28,7 +28,6 @@ function HomePage() {
       setListas(res.data);
     } catch (error) {
       console.error('Erro ao carregar listas:', error);
-      // Se o token for inválido, redireciona para login
       if (error.response?.status === 401 || error.response?.status === 403) {
         localStorage.clear();
         navigate('/login');
@@ -59,20 +58,34 @@ function HomePage() {
     navigate('/pesquisar');
   };
 
+  const handleIrParaAdmin = () => {
+    navigate('/admin');
+  };
+
   return (
     <div style={{ padding: '2rem' }}>
       {usuario ? (
         <>
           <h2>Bem-vindo, {usuario.nome}!</h2>
-          <button onClick={handleLogout} style={{ marginBottom: '1rem', marginRight: '1rem' }}>
-            Sair
-          </button>
-          <button onClick={handleNovaLista} style={{ marginBottom: '1rem', marginRight: '1rem' }}>
-            Nova Lista
-          </button>
-          <button onClick={handleIrParaPesquisa} style={{ marginBottom: '1rem' }}>
-            Pesquisar Itens
-          </button>
+          <div style={{ marginBottom: '1rem' }}>
+            <button onClick={handleLogout} style={{ marginRight: '1rem' }}>
+              Sair
+            </button>
+            <button onClick={handleNovaLista} style={{ marginRight: '1rem' }}>
+              Nova Lista
+            </button>
+            <button onClick={handleIrParaPesquisa} style={{ marginRight: '1rem' }}>
+              Pesquisar Itens
+            </button>
+            {usuario.role === 'admin' && (
+              <button
+                onClick={handleIrParaAdmin}
+                style={{ backgroundColor: '#6c63ff', color: '#fff' }}
+              >
+                Ir para Área de Administrador
+              </button>
+            )}
+          </div>
 
           <h3>Minhas listas:</h3>
           <ListaContainer

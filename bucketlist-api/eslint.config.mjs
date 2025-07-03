@@ -14,7 +14,7 @@ export default defineConfig([
     plugins: {
       prettier: prettierPlugin,
     },
-    rules: {     
+    rules: {
       'prefer-const': 'error',
       'no-console': 'warn',
       'consistent-return': 'warn',
